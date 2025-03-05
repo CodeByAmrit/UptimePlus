@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UptimePulse Monitor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">UptimePulse Monitor</h1>
+
+        <label for="url" class="block text-gray-600 mb-2">Enter URL to Monitor:</label>
+        <input type="text" id="url"
+            class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="https://example.com">
+
+        <button onclick="checkUptime()"
+            class="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Check Uptime</button>
+
+        <div id="result" class="mt-4 text-center text-gray-800"></div>
+    </div>
+
+    <script>
+        async function checkUptime() {
+            const url = document.getElementById("url").value;
+            if (!url) {
+                document.getElementById("result").innerText = "Please enter a valid URL.";
+                return;
+            }
+
+            const response = await fetch("http://localhost:3000/check-uptime", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url }),
+            });
+
+            const data = await response.json();
+            document.getElementById("result").innerText = data.message || "Error checking uptime!";
+        }
+    </script>
+
+</body>
+
+</html>
