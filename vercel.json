@@ -6,10 +6,6 @@
       "dest": "server.js"
     }
   ],
-  "env": {
-    "DATABASE_URL": "@uptime_monitor_db",
-    "NODE_ENV": "production"
-  },
   "functions": {
     "server.js": {
       "memory": 1024,
