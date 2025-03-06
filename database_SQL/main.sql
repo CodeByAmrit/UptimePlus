@@ -59,6 +59,21 @@ CREATE TABLE api_keys (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Create Uptime Logs Table
+CREATE TABLE uptime_logs (
+    id SERIAL PRIMARY KEY,
+    monitor_id INTEGER REFERENCES monitors (id) ON DELETE CASCADE,
+    status VARCHAR(10) NOT NULL CHECK (status IN ('UP', 'DOWN')),
+    response_time INTEGER, -- in milliseconds
+    checked_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Index for faster lookup on monitor_id
+CREATE INDEX idx_uptime_logs_monitor_id ON uptime_logs (monitor_id);
+
+-- Index for efficient queries on status
+CREATE INDEX idx_uptime_logs_status ON uptime_logs (status);
+
 -- Indexing for Performance
 CREATE INDEX idx_users_email ON users (email);
 

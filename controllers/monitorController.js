@@ -1,5 +1,6 @@
 const Monitor = require('../models/monitorModel');
 const uptimeChecker = require('../utils/uptimeChecker');
+const db = require("../config/db");
 
 // Create a new monitor
 exports.createMonitor = async (req, res) => {
@@ -98,5 +99,19 @@ exports.updateMonitorStatus = async (id, status) => {
         return updatedMonitor;
     } catch (error) {
         console.log(error);
+    }
+};
+
+// show uptime history in the UI
+exports.getUptimeLogs = async (req, res) => {
+    const { monitorId } = req.params;
+
+    try {
+        const query = `SELECT * FROM uptime_logs WHERE monitor_id = $1 ORDER BY checked_at DESC LIMIT 50;`;
+        const { rows } = await db.executeQuery(query, [monitorId]);
+
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch logs" });
     }
 };

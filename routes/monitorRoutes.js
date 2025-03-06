@@ -20,4 +20,6 @@ router.delete('/monitors/:id', monitorController.deleteMonitor);
 // Manually trigger uptime check for a monitor
 router.get('/monitors/:id/check', monitorController.checkMonitor);
 
+router.get('/monitors/logs/:monitorId', monitorController.getUptimeLogs);
+
 module.exports = router;
