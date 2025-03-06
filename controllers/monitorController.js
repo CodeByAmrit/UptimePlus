@@ -4,8 +4,9 @@ const uptimeChecker = require('../utils/uptimeChecker');
 // Create a new monitor
 exports.createMonitor = async (req, res) => {
     try {
-        const { name, url, interval } = req.body;
-        const newMonitor = await Monitor.create({ name, url, interval });
+        const { name, url, type, interval } = req.body;
+        const user_id = 1;
+        const newMonitor = await Monitor.create({ user_id, name, url, type, interval });
         res.status(201).json(newMonitor);
     } catch (error) {
         res.status(500).json({ message: "Error creating monitor", error: error.message });
@@ -17,6 +18,16 @@ exports.getAllMonitors = async (req, res) => {
     try {
         const monitors = await Monitor.findAll();
         res.status(200).json(monitors);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching monitors", error: error.message });
+    }
+};
+
+// Get all monitors for scheduler
+exports.getAllMonitorsScheduler = async () => {
+    try {
+        const monitors = await Monitor.findAllScheduler();
+        return monitors;
     } catch (error) {
         res.status(500).json({ message: "Error fetching monitors", error: error.message });
     }
@@ -69,9 +80,23 @@ exports.checkMonitor = async (req, res) => {
             return res.status(404).json({ message: "Monitor not found" });
         }
 
-        const status = await uptimeChecker(monitor.url);
+        const url_with_protocol = `${monitor.type.toLowerCase()}://${monitor.url}`;
+        // console.log("url", url_with_protocol);
+        const status = await uptimeChecker(url_with_protocol);
         res.status(200).json({ url: monitor.url, status });
     } catch (error) {
         res.status(500).json({ message: "Error checking monitor", error: error.message });
+    }
+};
+
+exports.updateMonitorStatus = async (id, status) => {
+    try {
+        const updatedMonitor = await Monitor.updateStatus(id, status);
+        if (!updatedMonitor) {
+            return { message: "Monitor not found" };
+        }
+        return updatedMonitor;
+    } catch (error) {
+        console.log(error);
     }
 };

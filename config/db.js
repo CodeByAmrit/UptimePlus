@@ -26,7 +26,7 @@ async function executeQuery(query, params = []) {
     const client = await getConnection();
     try {
         const result = await client.query(query, params);
-        return result.rows;
+        return result;
     } catch (err) {
         console.error("Query Execution Error:", err);
         throw err;

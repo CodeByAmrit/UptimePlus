@@ -7,52 +7,74 @@ const path = require("path");
 // Path to store failure logs
 const logFilePath = path.join(__dirname, "../logs/failures.log");
 
+// ✅ Ensure logs directory exists
+const logDir = path.join(__dirname, "../logs");
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir);
+}
+
 // Set to track recent checks (prevents flooding the same domain)
 const recentChecks = new Set();
 
+// Global task reference (for restarting cron job)
+let scheduledTask;
+
 // Function to log failures
 function logFailure(monitor, status) {
-    const logEntry = `${new Date().toISOString()} | ${monitor.url} | Status: ${status}\n`;
+    const logEntry = `${new Date().toISOString()} | ${monitor.type}://${monitor.url} | Status: ${status}\n`;
     fs.appendFile(logFilePath, logEntry, (err) => {
         if (err) console.error("Error writing to failure log:", err);
     });
 }
 
-// Schedule job to run every 5 minutes
-cron.schedule("*/5 * * * *", async () => {
-    console.log("Running scheduled uptime check...");
-
-    try {
-        // Fetch all monitors from the database
-        const monitors = await Monitor.getAllMonitors();
-
-        // Iterate through each monitor
-        for (const monitor of monitors) {
-            // Security: Prevent multiple checks for the same URL in the same cycle
-            if (recentChecks.has(monitor.url)) {
-                console.log(`Skipping ${monitor.url}, already checked recently.`);
-                continue;
-            }
-            recentChecks.add(monitor.url);
-
-            // Perform uptime check
-            const status = await checkUptime(monitor.url);
-
-            // Update database with the new status
-            await Monitor.updateMonitorStatus(monitor.id, status);
-            console.log(`Checked ${monitor.url}: ${status}`);
-
-            // If the check fails, log it separately
-            if (status !== "UP") {
-                logFailure(monitor, status);
-            }
-        }
-
-        // Clear recent checks after execution
-        recentChecks.clear();
-    } catch (err) {
-        console.error("Error in scheduled task:", err);
+// ✅ Function to start or restart the cron job
+async function startCronJob() {
+    if (scheduledTask) {
+        scheduledTask.stop(); // Stop the previous job if it exists
+        console.log("⏳ Restarting cron job...");
     }
-});
 
-console.log("Secure Cron job scheduled: Running every 5 minutes");
+    scheduledTask = cron.schedule("2 * * * * *", async () => {
+        console.log("🔍 Running scheduled uptime check...");
+
+        try {
+            const monitors = await Monitor.getAllMonitorsScheduler();
+
+            for (const monitor of monitors) {
+                // ✅ Construct URL with protocol
+                const url_with_protocol = `${monitor.type.toLowerCase()}://${monitor.url}`;
+
+                if (recentChecks.has(url_with_protocol)) {
+                    console.log(`⚠ Skipping ${url_with_protocol}, already checked recently.`);
+                    continue;
+                }
+                console.log("added ", monitor.id);
+                recentChecks.add(url_with_protocol);
+
+                // Perform uptime check
+                const { status } = await checkUptime(url_with_protocol);
+
+                // Update database with the new status
+                await Monitor.updateMonitorStatus(monitor.id, status);
+                console.log(`✅ Checked ${url_with_protocol}: ${status}`);
+
+                if (status !== "UP") {
+                    logFailure(monitor, status);
+                }
+            }
+
+            recentChecks.clear();
+        } catch (err) {
+            console.error("❌ Error in scheduled task:", err);
+        }
+    });
+
+    console.log("✅ Cron job scheduled: Running every 5 minutes");
+}
+
+// Start the cron job initially
+startCronJob();
+
+
+// ✅ Export restart function so it can be triggered when a monitor is added/deleted
+module.exports = { startCronJob };

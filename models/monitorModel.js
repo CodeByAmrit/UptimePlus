@@ -2,9 +2,10 @@ const db = require('../config/db');
 
 class Monitor {
     // Create a new monitor
-    static async create({ name, url, interval }) {
-        const query = `INSERT INTO monitors (name, url, interval) VALUES ($1, $2, $3) RETURNING *`;
-        const values = [name, url, interval];
+    static async create({ user_id, name, url, type, interval }) {
+        // console.log("id", user_id); return;
+        const query = `INSERT INTO monitors (user_id, name, url, type, interval) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+        const values = [user_id, name, url, type, interval];
 
         try {
             const { rows } = await db.executeQuery(query, values);
@@ -16,6 +17,18 @@ class Monitor {
 
     // Get all monitors
     static async findAll() {
+        const query = `SELECT * FROM monitors`;
+
+        try {
+            const { rows } = await db.executeQuery(query);
+            return rows;
+        } catch (error) {
+            throw new Error("Error fetching monitors: " + error.message);
+        }
+    }
+   
+    // Get all monitors for Scheduler
+    static async findAllScheduler() {
         const query = `SELECT * FROM monitors`;
 
         try {
@@ -50,6 +63,28 @@ class Monitor {
             throw new Error("Error updating monitor: " + error.message);
         }
     }
+
+    // Update a monitor status
+    static async updateStatus(id, status) {
+        // Map uptime statuses to allowed database values
+        const statusMap = {
+            UP: "active",
+            DOWN: "paused",
+        };
+
+        const dbStatus = statusMap[status] || "active"; // Default to 'active' if undefined
+
+        const query = `UPDATE monitors SET status = $1 WHERE id = $2 RETURNING *`;
+        const values = [dbStatus, id];
+
+        try {
+            const { rows } = await db.executeQuery(query, values);
+            return rows[0] || null;
+        } catch (error) {
+            throw new Error("Error updating monitor: " + error.message);
+        }
+    }
+
 
     // Delete a monitor
     static async delete(id) {
