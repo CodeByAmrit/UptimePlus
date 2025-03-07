@@ -30,7 +30,7 @@ exports.getAllMonitorsScheduler = async () => {
         const monitors = await Monitor.findAllScheduler();
         return monitors;
     } catch (error) {
-        res.status(500).json({ message: "Error fetching monitors", error: error.message });
+        console.log(error);
     }
 };
 

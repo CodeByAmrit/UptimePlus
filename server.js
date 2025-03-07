@@ -4,7 +4,9 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const xss = require("xss-clean");
 const mongoSanitize = require("express-mongo-sanitize");
+var cookieParser = require('cookie-parser')
 
+const user_route = require("./routes/userRoutes");
 const monitor_route = require("./routes/monitorRoutes");
 const path = require("path");
 
@@ -13,7 +15,7 @@ const port = 3000;
 
 
 // ✅ Attach the scheduler
-require("./utils/scheduler");
+// require("./utils/scheduler");
 
 // ✅ Trust proxies (for rate limiting & IP tracking)
 app.set("trust proxy", 1);
@@ -25,6 +27,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
+app.disable('x-powered-by');
 
 // ✅ CORS: Allow frontend to communicate with the API
 app.use(
@@ -47,6 +50,7 @@ app.use(limiter);
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(cookieParser());
 app.use(
   express.urlencoded({
     extended: true,
@@ -58,11 +62,12 @@ app.use(
 );
 
 // Routes
+app.use(user_route);
 app.use(monitor_route);
 
 // Default Route
-app.get("/", (req, res) => {
-  res.send("Home Page");
+app.get("/login", (req, res) => {
+  res.redirect("/login.html");
 });
 
 // Global Error Handler
@@ -72,6 +77,4 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+module.exports = app;
