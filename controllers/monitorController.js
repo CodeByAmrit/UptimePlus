@@ -44,7 +44,11 @@ exports.getMonitorById = async (req, res) => {
         }
         // const filtered = monitor.filter(monitor => monitor.user_id === req.user._id);
         if (monitor.user_id === req.user._id) { res.status(200).json(monitor); }
-        else res.status(200).json({});
+        else res.status(403).json({
+            error: `Access Denied. User ${req.user.email} does not have permission to access this data, which belongs to a different user.`
+        });
+
+
     } catch (error) {
         res.status(500).json({ message: "Error fetching monitor", error: error.message });
     }
