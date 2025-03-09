@@ -6,7 +6,7 @@ const db = require("../config/db");
 exports.createMonitor = async (req, res) => {
     try {
         const { name, url, type, interval } = req.body;
-        const user_id = 1;
+        const user_id = req.user._id;
         const newMonitor = await Monitor.create({ user_id, name, url, type, interval });
         res.status(201).json(newMonitor);
     } catch (error) {
@@ -18,7 +18,8 @@ exports.createMonitor = async (req, res) => {
 exports.getAllMonitors = async (req, res) => {
     try {
         const monitors = await Monitor.findAll();
-        res.status(200).json(monitors);
+        const filtered = monitors.filter(monitor => monitor.user_id === req.user._id);
+        res.status(200).json(filtered);
     } catch (error) {
         res.status(500).json({ message: "Error fetching monitors", error: error.message });
     }
