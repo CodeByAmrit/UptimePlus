@@ -42,7 +42,8 @@ exports.getMonitorById = async (req, res) => {
         if (!monitor) {
             return res.status(404).json({ message: "Monitor not found" });
         }
-        res.status(200).json(monitor);
+        const filtered = monitor.filter(monitor => monitor.user_id === req.user._id);
+        res.status(200).json(filtered);
     } catch (error) {
         res.status(500).json({ message: "Error fetching monitor", error: error.message });
     }
