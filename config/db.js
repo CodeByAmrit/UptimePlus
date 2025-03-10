@@ -11,7 +11,7 @@ const config = {
     database: process.env.DB_DATABASE,
     ssl: {
         rejectUnauthorized: true,
-        ca: process.env.DB_CA,
+        ca: Buffer.from(process.env.DB_CA, "base64").toString("utf-8"),
     }
 };
 
