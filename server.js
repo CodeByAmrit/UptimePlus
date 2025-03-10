@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser')
 
 const user_route = require("./routes/userRoutes");
 const monitor_route = require("./routes/monitorRoutes");
+const ejs_route = require("./routes/ejsRoutes");
 const path = require("path");
 
 const app = express();
@@ -19,6 +20,7 @@ const port = 3000;
 
 // ✅ Trust proxies (for rate limiting & IP tracking)
 app.set("trust proxy", 1);
+app.set('view engine', 'ejs');
 
 // Serve static files (for frontend testing)
 app.use("/", express.static(path.join(__dirname, "public")));
@@ -64,11 +66,9 @@ app.use(
 // Routes
 app.use(user_route);
 app.use(monitor_route);
+app.use(ejs_route);
 
-// Default Route
-app.get("/login", (req, res) => {
-  res.redirect("/login.html");
-});
+
 
 // Global Error Handler
 app.use((err, req, res, next) => {

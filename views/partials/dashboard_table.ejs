@@ -1,0 +1,210 @@
+<div class="p-4 sm:ml-64 dark:bg-gray-900 dark:text-white">
+    <div class="w-full h-full flex flex-col lg:flex-row mt-2 dark:bg-gray-900 dark:text-white gap-5">
+
+        <div class="flex justify-between w-full h-fit">
+            <h1 class="font-bold dark:text-white text-xl">Monitors</h1>
+
+            <button type="button"
+                class="text-white h-10 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                + &nbsp;&nbsp;New Monitor
+            </button>
+        </div>
+
+        <div class="min-w-fit flex flex-row lg:flex-col gap-4 p-2 overflow-y-auto">
+
+            <!-- Current status -->
+            <div
+                class="min-w-fit w-1/2 lg:w-full flex flex-col justify-center items-center p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+
+                <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                    Current status
+                </h5>
+
+
+                <div class="min-w-10 h-10 flex justify-center items-center relative transition-discrete">
+                    <div class="w-8 h-8 rounded-full bg-green-100 me-2 absolute animate-ping"></div>
+                    <div class="w-8 h-8 rounded-full bg-green-500 me-2 absolute"></div>
+                </div>
+
+
+                <div class="flex gap-10">
+                    <p class="mb-3 flex flex-col font-normal text-sm text-center text-gray-700 dark:text-gray-400">
+                        <span class="text-lg font-semibold">0</span>
+                        <span class="text-xs whitespace-nowrap">Down</span>
+                    </p>
+                    <p class="mb-3 flex flex-col font-normal text-sm text-center text-gray-700 dark:text-gray-400">
+                        <span class="text-lg font-semibold">1</span>
+                        <span class="text-xs whitespace-nowrap">Up</span>
+                    </p>
+                    <p class="mb-3 flex flex-col font-normal text-sm text-center text-gray-700 dark:text-gray-400">
+                        <span class="text-lg font-semibold">0</span>
+                        <span class="text-xs whitespace-nowrap">Paused</span>
+                    </p>
+                </div>
+                <p class="text-sm">Using 1 of 50 monitors.</p>
+            </div>
+
+            <!-- Last 24 hours. -->
+            <div
+                class="min-w-fit w-1/2 lg:w-full flex flex-col justify-center items-center p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+
+                <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                    Last 24 hours.
+                </h5>
+
+                <div class="grid grid-cols-2 md:grid-cols-2 gap-4">
+                    <p class="flex flex-col font-normal text-sm text-center text-gray-700 dark:text-gray-400">
+                        <span class="text-lg font-semibold">36.358%</span>
+                        <span class="text-xs whitespace-nowrap">Overall uptime</span>
+                    </p>
+                    <p class="flex flex-col font-normal text-sm text-center text-gray-700 dark:text-gray-400">
+                        <span class="text-lg font-semibold">2</span>
+                        <span class="text-xs whitespace-nowrap">Incidents</span>
+                    </p>
+                    <p class="flex flex-col font-normal text-sm text-center text-gray-700 dark:text-gray-400">
+                        <span class="text-lg font-semibold">8h, 43m</span>
+                        <span class="text-xs whitespace-nowrap">Without incid.</span>
+                    </p>
+                    <p class="flex flex-col font-normal text-sm text-center text-gray-700 dark:text-gray-400">
+                        <span class="text-lg font-semibold">1</span>
+                        <span class="text-xs whitespace-nowrap">Affected mon.</span>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- monitor table -->
+    <div class="w-full min-h-screen -mt-70 lg:-mt-130 flex flex-col lg:flex-row dark:bg-gray-900 dark:text-white gap-5">
+        <div class="relative overflow-x-auto sm:rounded-lg w-full lg:mr-75 h-screen">
+            <div
+                class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+                <div>
+                    <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
+                        class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                        type="button">
+                        <span class="sr-only">Action button</span>
+                        Action
+                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownAction"
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
+                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownActionButton">
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate
+                                    account</a>
+                            </li>
+                        </ul>
+                        <div class="py-1">
+                            <a href="#"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
+                                User</a>
+                        </div>
+                    </div>
+                </div>
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="text" id="table-search-users"
+                        class="block p-1.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search for users">
+                </div>
+            </div>
+            <table class="w-full border-separate border-spacing-0">
+                <tbody id="table_body">
+                    <tr
+                        class="bg-gray-100 cursor-pointer border dark:bg-gray-800 dark:border-gray-700 border-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg overflow-hidden">
+                        <td
+                            class="w-4 px-4 py-2 rounded-l-lg border-l border-t border-b border-gray-300 dark:border-gray-700">
+                            <div class="flex items-center">
+                                <input id="checkbox-table-search-1" type="checkbox"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-lg focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="checkbox-table-search-1" class="sr-only"></label>
+                            </div>
+                        </td>
+                        <th scope="row"
+                            class="flex items-center px-1 py-2 text-gray-900 whitespace-nowrap dark:text-white border-t border-b border-gray-300 dark:border-gray-700">
+                            <div class="min-w-10 h-10 flex justify-center items-center relative">
+                                <div class="w-8 h-8 rounded-full bg-green-300 me-2 absolute animate-ping"></div>
+                                <div class="w-6 h-6 rounded-full bg-green-500 me-2 absolute"></div>
+                            </div>
+                            <div class="ps-3">
+                                <div class="text-base font-semibold">edu.codebyamrit.co.in</div>
+                                <div class="font-normal text-gray-500">HTTP UP</div>
+                            </div>
+                        </th>
+                        <td class="px-6 py-2  border-t border-b border-gray-300 dark:border-gray-700">
+                            <div class="flex items-center" id="up_status">
+                                <ul class="flex gap-0.5 justify-center">
+                                    <li data-tooltip-target="tooltip-default-1"
+                                        class="w-1 bg-green-600 h-5 rounded hover:bg-green-800"></li>
+
+                                    <div id="tooltip-default-1" role="tooltip"
+                                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                        Tooltip content
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+
+                                </ul>
+                            </div>
+                        </td>
+                        <td
+                            class="px-2 py-4 rounded-r-lg border-r border-t border-b border-gray-300 dark:border-gray-700">
+                            <button id="monitor-toggle" title="button" data-dropdown-toggle="monitor-toggle-dropdown"
+                                class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                                type="button">
+                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                </svg>
+                            </button>
+                            <div id="monitor-toggle-dropdown"
+                                class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="monitor-toggle">
+                                    <li>
+                                        <a href="#"
+                                            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"
+                                            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                    </li>
+                                </ul>
+                                <div class="py-1">
+                                    <a href="#"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
