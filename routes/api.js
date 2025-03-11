@@ -4,9 +4,11 @@ const MonitorLog = require('../models/MonitorLog');
 const Alert = require('../models/Alert');
 const UptimeLog = require('../models/UptimeLog');
 const ApiKey = require('../models/ApiKey');
+const checkApi = require("../services/checkAPI");
+const checkAuth = require("../services/checkauth");
 
 // Monitor Logs Routes
-router.post('/logs', async (req, res) => {
+router.post('/logs', checkApi, async (req, res) => {
     try {
         const log = await MonitorLog.create(req.body);
         res.status(201).json(log);
@@ -15,7 +17,7 @@ router.post('/logs', async (req, res) => {
     }
 });
 
-router.get('/logs/:monitorId', async (req, res) => {
+router.get('/logs/:monitorId', checkApi, async (req, res) => {
     try {
         const logs = await MonitorLog.findByMonitorId(req.params.monitorId);
         res.json(logs);
@@ -25,7 +27,7 @@ router.get('/logs/:monitorId', async (req, res) => {
 });
 
 // Alerts Routes
-router.post('/alerts', async (req, res) => {
+router.post('/alerts', checkApi, async (req, res) => {
     try {
         const alert = await Alert.create(req.body);
         res.status(201).json(alert);
@@ -35,7 +37,7 @@ router.post('/alerts', async (req, res) => {
 });
 
 // Uptime Logs Routes
-router.post('/uptime', async (req, res) => {
+router.post('/uptime', checkApi, async (req, res) => {
     try {
         const log = await UptimeLog.create(req.body);
         res.status(201).json(log);
@@ -45,10 +47,22 @@ router.post('/uptime', async (req, res) => {
 });
 
 // API Keys Routes
-router.post('/api-keys', async (req, res) => {
+router.post('/api-keys', checkAuth, async (req, res) => {
     try {
-        const apiKey = await ApiKey.create(req.body);
+        console.log(req.user._id);
+        const apiKey = await ApiKey.create(req.user._id);
         res.status(201).json(apiKey);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// API Keys Routes 
+router.delete('/api-keys', checkAuth, async (req, res) => {
+    try {
+        const apiKey = await ApiKey.delete(req.user._id, req.body);
+        apiKey.message = "API deleted successfully";
+        res.status(200).json(apiKey);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

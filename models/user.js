@@ -97,7 +97,7 @@ class User {
     static async login(req, res) {
 
         let { email, password } = req.body;
-        email = email.trim().toLowerCase(); // Normalize email
+        email = email?.trim().toLowerCase(); // Normalize email
 
 
         // Fetch user with LIMIT 1 for performance boost
