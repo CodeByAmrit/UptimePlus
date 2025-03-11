@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser')
 const user_route = require("./routes/userRoutes");
 const monitor_route = require("./routes/monitorRoutes");
 const ejs_route = require("./routes/ejsRoutes");
+const api_route = require("./routes/api");
 const path = require("path");
 
 const app = express();
@@ -71,6 +72,7 @@ app.get("/login", (req, res) => {
 // Routes
 app.use(user_route);
 app.use(monitor_route);
+app.use("/api", api_route);
 // app.use(ejs_route);
 
 
