@@ -4,7 +4,7 @@
     <div class="px-6 py-4 pt-6 flex justify-center items-center scale-90">
         <p class="text-blue-700 text-2xl font-bold">UpTime-Plus</p>
     </div>
-    <div class="h-full px-6 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+    <div class="h-full px-6 pb-4 overflow-y-auto bg-white dark:bg-gray-800 flex">
         <ul class="space-y-2 ">
             <li>
                 <a href="/dashboard"
@@ -21,7 +21,9 @@
             <li>
                 <a href="/incidents"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <img src="/images/alert.png" class="flex-shrink-0 w-5 h-5 mx-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" alt="alert">
+                    <img src="/images/alert.png"
+                        class="flex-shrink-0 w-5 h-5 mx-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        alt="alert">
                     <span class="flex-1 ms-3 whitespace-nowrap">Incidents</span>
                     <span
                         class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
@@ -34,7 +36,9 @@
             <li>
                 <a href="/status_pages"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <img src="/images/live.png" class="flex-shrink-0 w-5 h-5 mx-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" alt="live">
+                    <img src="/images/live.png"
+                        class="flex-shrink-0 w-5 h-5 mx-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        alt="live">
                     <span class="flex-1 ms-3 whitespace-nowrap">Status Pages</span>
                 </a>
             </li>
@@ -42,7 +46,9 @@
             <li>
                 <a href="/maintenance"
                     class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <img src="/images/wrench.png" class="flex-shrink-0 w-5 h-5 mx-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" alt="live">
+                    <img src="/images/wrench.png"
+                        class="flex-shrink-0 w-5 h-5 mx-4 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                        alt="live">
                     <span class="flex-1 ms-3 whitespace-nowrap">Maintenance</span>
                 </a>
             </li>
@@ -72,5 +78,32 @@
                 </a>
             </li>
         </ul>
+        <div class="w-auto absolute bottom-2 rounded-2xl">
+            <a href="#" id="user-toggle" data-dropdown-toggle="user-toggle-dropdown"
+                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <img src="/images/google.png" height="30px" width="30px" alt="user">
+                <div class="flex flex-col">
+                    <span class="flex-1 ms-3 whitespace-nowrap"><%= user?.name.toUpperCase(); %></span>
+                    <span class="flex-1 ms-3 whitespace-nowrap text-xs"><%= user?.email; %></span>
+                </div>
+            </a>
+        </div>
+        <div id="user-toggle-dropdown" aria-labelledby="user-toggle"
+            class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="monitor-toggle">
+                <li>
+                    <a href="#"
+                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                </li>
+                <li>
+                    <a href="#"
+                        class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                </li>
+            </ul>
+            <div class="py-1">
+                <a href="/logout"
+                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Logout</a>
+            </div>
+        </div>
     </div>
 </aside>

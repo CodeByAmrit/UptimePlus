@@ -26,10 +26,10 @@ document.getElementById('login-form').onsubmit = async function (e) {
         // }
 
         // Hide previous errors
-        document.getElementById('email-error').classList.add('hidden');
-        document.getElementById('password-error').classList.add('hidden');
-        document.getElementById('email').classList.remove('border-red-500');
-        document.getElementById('password').classList.remove('border-red-500');
+        // document.getElementById('email-error').classList.add('hidden');
+        // document.getElementById('password-error').classList.add('hidden');
+        // document.getElementById('email').classList.remove('border-red-500');
+        // document.getElementById('password').classList.remove('border-red-500');
 
         // Disable button to prevent multiple requests
         loginBtn.disabled = true;
@@ -41,6 +41,8 @@ document.getElementById('login-form').onsubmit = async function (e) {
         });
 
         const data = await res.json();
+
+        console.log(data);
 
         if (data.status === 'success') {
             window.location.href = '/dashboard';

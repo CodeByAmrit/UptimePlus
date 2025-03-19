@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UptimePulse Monitor</title>
+    <title>Uptime Plus - Server Monitoring</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.css" />
 </head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold text-blue-600">Uptime Plus</a>
+        <div>
+            <a href="/login" class="text-gray-700 hover:text-blue-600 px-4">Login</a>
+            <a href="/signup" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Sign Up</a>
+        </div>
+    </nav>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <!-- Hero Section -->
+    <section class="text-center py-20 bg-blue-50">
+        <h1 class="text-4xl font-bold text-gray-800">Monitor Your Server Uptime Effortlessly</h1>
+        <p class="mt-4 text-gray-600 text-lg">Get real-time notifications when your website goes down and ensure maximum uptime.</p>
+        <a href="#" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700">Get Started</a>
+    </section>
 
-    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">UptimePulse Monitor</h1>
+    <!-- Features Section -->
+    <section class="py-16 px-6 max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+        <div class="bg-white shadow-md p-6 rounded-lg text-center">
+            <h2 class="text-xl font-semibold text-gray-800">Real-Time Monitoring</h2>
+            <p class="text-gray-600 mt-2">Track your server status with instant updates.</p>
+        </div>
+        <div class="bg-white shadow-md p-6 rounded-lg text-center">
+            <h2 class="text-xl font-semibold text-gray-800">Instant Alerts</h2>
+            <p class="text-gray-600 mt-2">Get notified via email or SMS when downtime occurs.</p>
+        </div>
+        <div class="bg-white shadow-md p-6 rounded-lg text-center">
+            <h2 class="text-xl font-semibold text-gray-800">Detailed Reports</h2>
+            <p class="text-gray-600 mt-2">Analyze uptime statistics with easy-to-read reports.</p>
+        </div>
+    </section>
 
-        <label for="url" class="block text-gray-600 mb-2">Enter URL to Monitor:</label>
-        <input type="text" id="url"
-            class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="https://example.com">
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>&copy; 2025 Uptime Plus. All rights reserved.</p>
+    </footer>
 
-        <button onclick="checkUptime()"
-            class="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Check Uptime</button>
-
-        <div id="result" class="mt-4 text-center text-gray-800"></div>
-    </div>
-
-    <script>
-        async function checkUptime() {
-            const url = document.getElementById("url").value;
-            if (!url) {
-                document.getElementById("result").innerText = "Please enter a valid URL.";
-                return;
-            }
-
-            const response = await fetch("/check-uptime", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url }),
-            });
-
-            const data = await response.json();
-            document.getElementById("result").innerText = data.message || "Error checking uptime!";
-        }
-    </script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.3/flowbite.min.js"></script>
 </body>
-
 </html>

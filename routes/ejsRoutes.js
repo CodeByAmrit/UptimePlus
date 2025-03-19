@@ -9,7 +9,7 @@ router.get("/login", (req, res) => {
 
 router.use(checkAuth)
 router.get("/dashboard", (req, res) => {
-    res.render("dashboard");
+    res.render("dashboard",{user: req.user});
 })
 
 module.exports = router;

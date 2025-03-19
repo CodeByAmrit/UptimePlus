@@ -65,15 +65,15 @@ app.use(
 );
 
 
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
-})
+// app.get("/login", (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public', 'login.html'));
+// })
 
 // Routes
 app.use(user_route);
 app.use(monitor_route);
 app.use("/api", api_route);
-// app.use(ejs_route);
+app.use(ejs_route);
 
 
 
