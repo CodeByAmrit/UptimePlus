@@ -16,17 +16,28 @@ class Monitor {
     }
 
     // Get all monitors
-    static async findAll() {
-        const query = `SELECT * FROM monitors`;
-
-        try {
-            const { rows } = await db.executeQuery(query);
-            return rows;
-        } catch (error) {
-            throw new Error("Error fetching monitors: " + error.message);
+    static async findAll(user_id = null) {
+        let query;
+        if (user_id != null) {
+            query = `SELECT * FROM monitors where user_id = $1`;
+            try {
+                const { rows } = await db.executeQuery(query, [user_id]);
+                return rows;
+            } catch (error) {
+                throw new Error("Error fetching monitors: " + error.message);
+            }
+        }
+        else {
+            query = `SELECT * FROM monitors`;
+            try {
+                const { rows } = await db.executeQuery(query);
+                return rows;
+            } catch (error) {
+                throw new Error("Error fetching monitors: " + error.message);
+            }
         }
     }
-   
+
     // Get all monitors for Scheduler
     static async findAllScheduler() {
         const query = `SELECT * FROM monitors`;
