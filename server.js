@@ -24,6 +24,7 @@ app.set("trust proxy", 1);
 app.set('view engine', 'ejs');
 
 // Serve static files (for frontend testing)
+app.set("views", path.join(__dirname, "views"));
 app.use("/", express.static(path.join(__dirname, "public")));
 
 // Security Middleware
